@@ -80,8 +80,10 @@ void	command(int argc, char **argv, char **envp, int prev, int* fd_prev) {
 				exit (-1);
 			if (next && dup2(fd_next[1], 1) < 0)
 				exit (-1);
-			if (execve(argv[0], argv, envp) < 0)
+			if (execve(argv[0], argv, envp) < 0) {
 				print_error("error: cannot execute ", argv[0]);
+				exit (-1);
+			}
 		}
 		else {
 			if (waitpid(pid, &exit_value, 0) < 0)
